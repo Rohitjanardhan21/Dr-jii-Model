@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Jii - AI Doctor Assistant</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- CHATBOT INTERFACE -->
+    <div class="chatbot-container">
+        <!-- Header -->
+        <div class="chatbot-header">
+            <div class="chatbot-header-content">
+                <div class="chatbot-logo">
+                    <span class="chatbot-icon">🤖</span>
+                    <h1>Dr. Jii</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Messages Area -->
+        <div class="chatbot-messages" id="chatMessages">
+            <!-- Welcome Message -->
+            <div class="message bot-message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <p>Hello! I'm Dr. Jii, your AI-powered medical assistant. I can help you:</p>
+                    <ul>
+                        <li>Search for patient medical reports</li>
+                        <li>Answer questions about your database</li>
+                        <li>View all medical reports</li>
+                    </ul>
+                    <p>Ask me anything! For example: "How many reports do we have?" or "What is the medical report of John Doe?"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mode Selection Bubbles - Medical Knowledge Only -->
+        <div class="mode-bubbles" id="modeBubbles">
+            <button class="mode-bubble" data-mode="medical_knowledge" type="button">
+                <span class="mode-icon">📚</span>
+                <span>Medical Knowledge</span>
+            </button>
+        </div>
+
+        <!-- Input Area -->
+        <div class="chatbot-input-area">
+            <div class="input-container">
+                <input 
+                    type="text" 
+                    id="chatInput" 
+                    class="chat-input" 
+                    placeholder="Ask me anything about patients, reports, tasks..."
+                    autocomplete="off"
+                >
+                <button id="sendButton" class="send-button" type="button" aria-label="Send message" title="Send message">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+Avijo things need to be changed
+
+-> In the medical report
+
+remove the Uploaded report section instead when ever a medical report is been upload its data will be parsed like this (Patient Info
+
+CBC / Hemogram
+• RBC metrics
+• WBC + differential
+• Platelets
+• ESR
+
+Urine R/E
+• Physical
+• Chemical
+• Microscopy
+
+Infection Screens
+• Malaria
+• Widal
+
+Liver function (ALT/SGPT)
+
+Inflammation marker (CRP)
+
+Key Highlights (optional but very useful)
+• “These values are high:”
+• “These values are low:”) 
+
+and will be get saved in the My Patients in patient list by showing the "patient info" above and after clicking on the view button these all data will be shown 
+(Patient Info
+
+CBC / Hemogram
+• RBC metrics
+• WBC + differential
+• Platelets
+• ESR
+
+Urine R/E
+• Physical
+• Chemical
+• Microscopy
+
+Infection Screens
+• Malaria
+• Widal
+
+Liver function (ALT/SGPT)
+
+Inflammation marker (CRP)
+
+Key Highlights (optional but very useful)
+• “These values are high:”
+• “These values are low:”)
+
+So also remove the upload report button it should be shown directly when go on the medical report section.
+
+
+-> after clicking the (Create Consultation with AI Analysis) everything is great showing but add one more thing add ICD Code and Recommended Tests: that the patent should do.
+

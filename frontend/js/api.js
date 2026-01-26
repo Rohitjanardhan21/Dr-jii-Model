@@ -1,0 +1,109 @@
+const API_BASE_URL = 'http://localhost:8000';
+
+let authToken = localStorage.getItem('authToken');
+let currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+
+const api = {
+    async request(endpoint, options = {}) {
+        const headers = {
+            'Content-Type': 'application/json',
+            ...options.headers
+        };
+
+        if (authToken) {
+            headers['Authorization'] = `Bearer ${authToken}`;
+        }
+
+        const config = {
+            ...options,
+            headers
+        };
+
+        try {
+            console.log('API Request:', `${API_BASE_URL}${endpoint}`, config);
+            const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+            console.log('API Response status:', response.status, response.statusText);
+            
+            if (!response.ok) {
+                let errorMessage = 'Request failed';
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.detail || errorData.message || errorMessage;
+                } catch (e) {
+                    // If response is not JSON, try to get text
+                    try {
+                        const errorText = await response.text();
+                        errorMessage = errorText || errorMessage;
+                    } catch (e2) {
+                        errorMessage = `Server error: ${response.status} ${response.statusText}`;
+                    }
+                }
+                throw new Error(errorMessage);
+            }
+
+            const data = await response.json();
+            console.log('API Response data:', data);
+            return data;
+        } catch (error) {
+            console.error('API Error:', error);
+            throw error;
+        }
+    },
+
+    async get(endpoint) {
+        return this.request(endpoint, { method: 'GET' });
+    },
+
+    async post(endpoint, data) {
+        return this.request(endpoint, {
+            method: 'POST',
+            body: JSON.stringify(data)
+        });
+    },
+
+    async uploadFile(endpoint, formData) {
+        const headers = {};
+        if (authToken) {
+            headers['Authorization'] = `Bearer ${authToken}`;
+        }
+
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+            method: 'POST',
+            headers,
+            body: formData
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.detail || 'Upload failed');
+        }
+
+        return await response.json();
+    },
+
+    setAuth(token, user) {
+        authToken = token;
+        currentUser = user;
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+    },
+
+    clearAuth() {
+        authToken = null;
+        currentUser = null;
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('currentUser');
+    },
+
+    isAuthenticated() {
+        return !!authToken;
+    },
+
+    getCurrentUser() {
+        return currentUser;
+    },
+    
+    get baseURL() {
+        return API_BASE_URL;
+    }
+};

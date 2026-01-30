@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     
     HOST: str = "0.0.0.0"
-    PORT: int = 8000
+    PORT: int = int(os.environ.get("PORT", 8081))  # Use Render's PORT env var
     
     # Always use root database, regardless of where the app is run from
     _project_root = Path(__file__).parent.parent

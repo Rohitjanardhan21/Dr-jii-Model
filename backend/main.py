@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 import logging
+from pathlib import Path
 from database import engine, Base
 from config import get_settings
 from api import doctor_routes, patient_routes, admin_routes
@@ -11,6 +13,9 @@ settings = get_settings()
 logging.basicConfig(level=logging.INFO)
 
 Base.metadata.create_all(bind=engine)
+
+# Get absolute path to frontend directory
+FRONTEND_PATH = Path(__file__).parent.parent / "frontend"
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -43,7 +48,8 @@ async def root():
 async def health_check():
     return {"status": "healthy", "service": "Dr. Jii API"}
 
-app.mount("/frontend", StaticFiles(directory="../frontend", html=True), name="frontend")
+# Mount frontend static files
+app.mount("/frontend", StaticFiles(directory=str(FRONTEND_PATH), html=True), name="frontend")
 
 if __name__ == "__main__":
     import uvicorn

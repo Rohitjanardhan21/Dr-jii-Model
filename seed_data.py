@@ -23,12 +23,20 @@ db = SessionLocal()
 print("🌱 Seeding database with test data...")
 
 try:
+    # Create all tables first
+    Base.metadata.create_all(bind=engine)
+    
     # Check if data already exists
-    existing_doctor = db.query(User).filter(User.username == "suryanshDr").first()
-    if existing_doctor:
-        print("⚠️  Data already exists. Clearing and re-seeding...")
-        # Drop all tables and recreate
-        Base.metadata.drop_all(bind=engine)
+    try:
+        existing_doctor = db.query(User).filter(User.username == "suryanshDr").first()
+        if existing_doctor:
+            print("⚠️  Data already exists. Clearing and re-seeding...")
+            # Drop all tables and recreate
+            Base.metadata.drop_all(bind=engine)
+            Base.metadata.create_all(bind=engine)
+    except Exception:
+        # Tables don't exist yet, that's fine
+        print("📋 Creating fresh database...")
         Base.metadata.create_all(bind=engine)
 
     # Create Doctor

@@ -8,39 +8,39 @@ echo "=========================================="
 echo "📦 Installing Python dependencies..."
 pip install -r requirements.txt
 
-# Check if Node.js is available
-if command -v node &> /dev/null; then
-    echo "✅ Node.js version: $(node --version)"
-    echo "✅ npm version: $(npm --version)"
-else
-    echo "❌ Node.js not found!"
-    exit 1
-fi
+# Check Node.js availability
+echo "🔍 Checking Node.js environment..."
+node --version
+npm --version
 
-# Build React frontend
-echo "🔨 Building React frontend..."
+# Navigate to frontend directory
+echo "📁 Navigating to frontend directory..."
 cd frontend
+pwd
+ls -la
 
-# Clean install for production
+# Clean any existing build
+echo "🧹 Cleaning previous builds..."
+rm -rf dist node_modules/.cache
+
+# Install frontend dependencies
 echo "📦 Installing frontend dependencies..."
-npm ci --only=production
+npm install
 
 # Build the React app
-echo "🏗️ Building React app..."
+echo "🏗️ Building React application..."
 npm run build
 
-# Verify build
+# Verify build success
+echo "✅ Verifying build..."
 if [ -d "dist" ]; then
-    echo "✅ React build successful!"
-    echo "📁 Build files:"
+    echo "✅ Build successful! Contents:"
     ls -la dist/
+    echo "📄 Index.html exists: $(test -f dist/index.html && echo 'YES' || echo 'NO')"
 else
-    echo "❌ React build failed - dist directory not found"
+    echo "❌ Build failed - dist directory not found"
     exit 1
 fi
 
 cd ..
-
-echo "🎉 Build complete!"
-echo "✅ Python backend ready"
-echo "✅ React frontend built"
+echo "🎉 Build process completed successfully!"

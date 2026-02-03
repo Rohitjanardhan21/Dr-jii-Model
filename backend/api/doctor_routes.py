@@ -1093,6 +1093,89 @@ Provide your analysis focusing on issues, causes, and recommendations. Do NOT in
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.get("/reports/{report_id}/file")
+async def get_report_file(
+    report_id: int,
+    db: Session = Depends(get_db)
+):
+    """
+    Download or view a medical report file (PDF, image, etc.)
+    """
+    try:
+        # Get the report
+        report = db.query(MedicalReport).filter(MedicalReport.id == report_id).first()
+        
+        if not report:
+            raise HTTPException(status_code=404, detail="Report not found")
+        
+        # Check if file exists
+        if not report.file_path or not os.path.exists(report.file_path):
+            raise HTTPException(status_code=404, detail="Report file not found")
+        
+        # Determine media type based on file extension
+        file_ext = os.path.splitext(report.file_path)[1].lower()
+        media_type_map = {
+            '.pdf': 'application/pdf',
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.png': 'image/png',
+            '.txt': 'text/plain'
+        }
+        
+        media_type = media_type_map.get(file_ext, 'application/octet-stream')
+        
+        # Create a safe filename for download
+        safe_filename = f"{report.report_type}_{report.patient.full_name}_{report.id}{file_ext}".replace(" ", "_")
+        
+        return FileResponse(
+            path=report.file_path,
+            media_type=media_type,
+            filename=safe_filename,
+            headers={
+                "Content-Disposition": f"inline; filename={safe_filename}",
+                "Cache-Control": "no-cache"
+            }
+        )
+        
+    except Exception as e:
+        logger.error(f"Error serving report file: {e}")
+        raise HTTPException(status_code=500, detail="Error retrieving report file")
+
+
+@router.get("/reports/{report_id}")
+async def get_report_details(
+    report_id: int,
+    db: Session = Depends(get_db)
+):
+    """
+    Get detailed information about a specific medical report
+    """
+    try:
+        report = db.query(MedicalReport).filter(MedicalReport.id == report_id).first()
+        
+        if not report:
+            raise HTTPException(status_code=404, detail="Report not found")
+        
+        return {
+            "id": report.id,
+            "patient_name": report.patient.full_name if report.patient else "Unknown",
+            "report_type": report.report_type,
+            "report_name": report.report_name,
+            "report_date": report.report_date.strftime('%Y-%m-%d') if report.report_date else None,
+            "file_type": report.file_type,
+            "file_path": report.file_path,
+            "ai_summary": report.ai_summary,
+            "extracted_text": report.extracted_text,
+            "uploaded_at": report.uploaded_at.strftime('%Y-%m-%d %H:%M:%S') if report.uploaded_at else None,
+            "download_url": f"/api/doctor/reports/{report.id}/file",
+            "can_view_inline": report.file_type in ['pdf', 'jpg', 'jpeg', 'png']
+        }
+        
+    except Exception as e:
+        logger.error(f"Error getting report details: {e}")
+        raise HTTPException(status_code=500, detail="Error retrieving report details")
+
+
 def calculate_file_hash(content: bytes) -> str:
     """Calculate MD5 hash of file content for duplicate detection"""
     return hashlib.md5(content).hexdigest()

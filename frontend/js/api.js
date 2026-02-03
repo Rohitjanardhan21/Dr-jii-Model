@@ -1,4 +1,18 @@
-const API_BASE_URL = 'http://localhost:8000';
+// Auto-detect API base URL based on environment
+const getApiBaseUrl = () => {
+    // If running on localhost, use localhost
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return 'http://localhost:8000';
+    }
+    // If deployed (Render, Vercel, etc.), use the same origin
+    return window.location.origin;
+};
+
+const API_BASE_URL = getApiBaseUrl();
+
+// Debug: Log the API base URL
+console.log('🔗 API Base URL:', API_BASE_URL);
+console.log('🌐 Current Location:', window.location.href);
 
 let authToken = localStorage.getItem('authToken');
 let currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');

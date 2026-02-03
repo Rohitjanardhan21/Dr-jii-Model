@@ -38,10 +38,17 @@ app.include_router(admin_routes.router)
 
 @app.get("/")
 async def root():
+    # Redirect to frontend for better UX
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/frontend/")
+
+@app.get("/api")
+async def api_root():
     return {
         "message": "Dr. Jii API is running",
         "version": settings.VERSION,
-        "docs": "/docs"
+        "docs": "/docs",
+        "frontend": "/frontend/"
     }
 
 @app.get("/health")

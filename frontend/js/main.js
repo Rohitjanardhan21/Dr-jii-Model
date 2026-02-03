@@ -440,7 +440,7 @@ async function handleQuery(message) {
         console.error('Error in handleQuery:', error);
         removeLoadingMessage();
         const errorMsg = error.message || error.toString() || 'Unknown error occurred';
-        addBotMessage(`❌ Error: ${errorMsg}\n\nPlease make sure the backend server is running on http://localhost:8000 and OpenAI API key is configured.`);
+        addBotMessage(`❌ Error: ${errorMsg}\n\nPlease check your internet connection and try again. If the problem persists, the server may be temporarily unavailable.`);
     }
 }
 

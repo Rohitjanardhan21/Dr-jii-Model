@@ -61,6 +61,9 @@ if FRONTEND_BUILD_PATH.exists():
     # Production: serve built React app
     app.mount("/frontend", StaticFiles(directory=str(FRONTEND_BUILD_PATH), html=True), name="frontend")
     
+    # Serve assets directly
+    app.mount("/assets", StaticFiles(directory=str(FRONTEND_BUILD_PATH / "assets")), name="assets")
+    
     @app.get("/frontend/{path:path}")
     async def serve_react_app(path: str):
         file_path = FRONTEND_BUILD_PATH / path

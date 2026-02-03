@@ -1,9 +1,9 @@
 services:
   - type: web
-    name: dr-jii-backend
-    runtime: python
+    name: dr-jii-medical-assistant
+    runtime: python3
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "python backend/main.py"
+    startCommand: "python start.py"
     plan: free
     envVars:
       - key: PORT
@@ -16,3 +16,5 @@ services:
         generateValue: true
       - key: ENVIRONMENT
         value: production
+      - key: DATABASE_URL
+        value: sqlite:///./drjii.db

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Jii Frontend Query Tester</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .query-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .query-button { 
+            background: #007bff; color: white; border: none; padding: 10px 15px; 
+            margin: 5px; border-radius: 3px; cursor: pointer; 
+        }
+        .query-button:hover { background: #0056b3; }
+        #results { 
+            margin-top: 20px; padding: 15px; background: #f8f9fa; 
+            border-radius: 5px; min-height: 100px; white-space: pre-wrap;
+        }
+        .mode-selector { margin: 10px 0; }
+        .mode-selector input { margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <h1>🏥 Dr. Jii Frontend Query Tester</h1>
+    
+    <div class="mode-selector">
+        <label><input type="radio" name="mode" value="medical_report" checked> Medical Reports Mode</label>
+        <label><input type="radio" name="mode" value="medical_knowledge"> Medical Knowledge Mode</label>
+    </div>
+
+    <div class="query-section">
+        <h3>📊 Patient & Report Queries</h3>
+        <button class="query-button" onclick="testQuery('How many patients do we have?')">Patient Count</button>
+        <button class="query-button" onclick="testQuery('Show me Rajesh Kumar information')">Find Rajesh Kumar</button>
+        <button class="query-button" onclick="testQuery('Tell me about Priya Sharma')">Find Priya Sharma</button>
+        <button class="query-button" onclick="testQuery('Summarize latest reports')">Latest Reports</button>
+    </div>
+
+    <div class="query-section">
+        <h3>🔬 Lab Value Searches</h3>
+        <button class="query-button" onclick="testQuery('Which patients have high cholesterol?')">High Cholesterol</button>
+        <button class="query-button" onclick="testQuery('Find patients with diabetes')">Diabetes Patients</button>
+        <button class="query-button" onclick="testQuery('Show patients with low hemoglobin')">Low Hemoglobin</button>
+        <button class="query-button" onclick="testQuery('Which patients have thyroid problems?')">Thyroid Issues</button>
+    </div>
+
+    <div class="query-section">
+        <h3>🧠 Medical Knowledge</h3>
+        <button class="query-button" onclick="testQuery('What are symptoms of diabetes?')">Diabetes Symptoms</button>
+        <button class="query-button" onclick="testQuery('Tell me about hypertension treatment')">Hypertension Treatment</button>
+        <button class="query-button" onclick="testQuery('What are signs of heart attack?')">Heart Attack Signs</button>
+        <button class="query-button" onclick="testQuery('How to interpret blood tests?')">Blood Test Interpretation</button>
+    </div>
+
+    <div class="query-section">
+        <h3>🔍 Custom Query</h3>
+        <input type="text" id="customQuery" placeholder="Enter your query here..." style="width: 70%; padding: 8px;">
+        <button class="query-button" onclick="testCustomQuery()">Send Query</button>
+    </div>
+
+    <div id="results">
+        <strong>Results will appear here...</strong><br><br>
+        <em>Click any button above to test a query, or enter a custom query.</em>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        
+        function getSelectedMode() {
+            return document.querySelector('input[name="mode"]:checked').value;
+        }
+        
+        async function testQuery(query) {
+            const resultsDiv = document.getElementById('results');
+            const mode = getSelectedMode();
+            
+            resultsDiv.innerHTML = `<strong>Testing Query:</strong> "${query}"\n<strong>Mode:</strong> ${mode}\n\n<em>Loading...</em>`;
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/doctor/chat/query`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        mode: mode
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                resultsDiv.innerHTML = `<strong>Query:</strong> "${query}"\n<strong>Mode:</strong> ${mode}\n\n<strong>Response:</strong>\n${data.response || 'No response received'}\n\n<strong>Requires Upload:</strong> ${data.requires_upload}\n<strong>Count:</strong> ${data.count || 'N/A'}`;
+                
+            } catch (error) {
+                resultsDiv.innerHTML = `<strong>Error:</strong> ${error.message}\n\n<strong>Query:</strong> "${query}"\n<strong>Mode:</strong> ${mode}\n\nMake sure the backend server is running on http://localhost:8000`;
+            }
+        }
+        
+        function testCustomQuery() {
+            const customQuery = document.getElementById('customQuery').value.trim();
+            if (customQuery) {
+                testQuery(customQuery);
+                document.getElementById('customQuery').value = '';
+            } else {
+                alert('Please enter a query first!');
+            }
+        }
+        
+        // Allow Enter key in custom query input
+        document.getElementById('customQuery').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                testCustomQuery();
+            }
+        });
+        
+        // Test connection on page load
+        window.onload = function() {
+            fetch(`${API_BASE}/health`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Backend connection successful:', data);
+                })
+                .catch(error => {
+                    console.error('Backend connection failed:', error);
+                    document.getElementById('results').innerHTML = 
+                        '<strong style="color: red;">⚠️ Backend server not responding!</strong>\n\n' +
+                        'Make sure the server is running on http://localhost:8000\n' +
+                        'Run: python backend/main.py';
+                });
+        };
+    </script>
+</body>
+</html>

@@ -1,39 +1,119 @@
-# Dr. Jii - Medical Assistant
+# 🏥 Dr. Jii Medical Assistant
 
-AI-powered medical assistant for doctors and healthcare professionals.
+A comprehensive AI-powered medical assistant platform with React frontend and FastAPI backend.
 
-## Quick Start
+## 🚀 Quick Start
 
-1. **Local Development:**
-   ```bash
-   # Install dependencies
-   pip install -r requirements.txt
-   
-   # Run the application
-   python backend/main.py
-   ```
-   Access: http://localhost:8000
+### **Option 1: Full Stack (Recommended)**
+```bash
+# Run the complete setup
+START_FULL_PROJECT.bat
+```
 
-2. **Deploy to Render:**
-   - Connect this repository to Render
-   - Build Command: `pip install -r requirements.txt`
-   - Start Command: `python backend/main.py`
-   - Add environment variables: `OPENAI_API_KEY`, `SECRET_KEY`
+### **Option 2: Manual Setup**
+```bash
+# 1. Install Python dependencies
+.venv\Scripts\activate
+pip install -r requirements.txt
 
-3. **Deploy Frontend to Cloudflare Pages:**
-   - Upload the `frontend/` folder to Cloudflare Pages
-   - Update API URLs to point to your backend
+# 2. Build React frontend
+cd frontend
+npm install
+npm run build
+cd ..
 
-## Environment Variables
+# 3. Start backend server
+python backend/main.py
+```
 
-Copy `.env.example` to `.env` and fill in your values:
-- `OPENAI_API_KEY`: Your OpenAI API key
-- `SECRET_KEY`: Random secret key for JWT tokens
+## 📱 **Access Points**
+- **Frontend**: http://localhost:8000/frontend/
+- **API Docs**: http://localhost:8000/docs
+- **Health Check**: http://localhost:8000/health
 
-## Features
+## 🎯 **Features**
+- ✅ **Modern React Frontend** with chat interface
+- ✅ **84 PDF Medical Reports** ready to view and download
+- ✅ **AI-Powered Chat** with OpenAI integration
+- ✅ **Patient Management** with search and filtering
+- ✅ **Medical Knowledge Base** for healthcare queries
+- ✅ **Task Management** system for medical workflows
+- ✅ **Responsive Design** works on desktop and mobile
 
-- Patient management
-- Medical report analysis
-- AI-powered medical knowledge queries
-- Prescription management
-- Emergency triage detection
+## 🧪 **Test Queries**
+- "How many patients do we have?"
+- "Show me medical reports for Priya Sharma"
+- "What are the latest blood test results?"
+- "Give me a summary of all reports"
+- "Show me all PDF reports"
+
+## 🔧 **Development**
+
+### **Frontend Development**
+```bash
+cd frontend
+npm run dev  # Start Vite dev server
+```
+
+### **Backend Development**
+```bash
+.venv\Scripts\activate
+python backend/main.py  # Start FastAPI server
+```
+
+## 🚀 **Deployment**
+
+### **Render Deployment**
+1. Push code to GitHub
+2. Connect repository to Render
+3. Use the included `render.yaml` configuration
+4. Set `OPENAI_API_KEY` environment variable
+
+### **Local Production Build**
+```bash
+build-frontend.bat  # Build React app
+python backend/main.py  # Serve production build
+```
+
+## 📊 **Database**
+- **40 Patients** with realistic Indian names
+- **84 Medical Reports** in PDF format
+- **Sample Tasks** and consultations
+- **SQLite database** with comprehensive medical data
+
+## 🔑 **Environment Variables**
+```env
+PORT=8000
+OPENAI_API_KEY=your_openai_api_key_here
+SECRET_KEY=your_secret_key
+ENVIRONMENT=development
+```
+
+## 🏗️ **Architecture**
+```
+Dr-jii-Model/
+├── backend/           # FastAPI backend
+│   ├── api/          # API routes
+│   ├── models.py     # Database models
+│   ├── services/     # Business logic
+│   └── main.py       # Application entry
+├── frontend/         # React frontend
+│   ├── src/         # React components
+│   ├── dist/        # Built files (auto-generated)
+│   └── package.json # Dependencies
+├── uploads/         # Medical report files
+├── drjii.db        # SQLite database
+└── render.yaml     # Deployment config
+```
+
+## 🎉 **What's New**
+- **Modern React UI** with chat interface
+- **Real-time messaging** with typing indicators
+- **PDF report cards** with inline viewing
+- **Responsive design** for all devices
+- **Auto-detecting API URLs** for deployment
+- **Chat history** with localStorage persistence
+
+---
+
+**Dr. Jii Medical Assistant** - Bringing AI to Healthcare 🏥✨

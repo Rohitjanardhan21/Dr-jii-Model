@@ -1560,12 +1560,17 @@ async def list_reports(
         {
             "id": r.id,
             "patient_id": r.patient_id,
+            "patient_name": r.patient.full_name if r.patient else "Unknown Patient",
             "report_type": r.report_type,
             "report_name": r.report_name,
             "report_date": r.report_date,
+            "file_path": r.file_path,
+            "file_type": r.file_type,
             "ai_summary": r.ai_summary,
             "parsed_data": r.parsed_data,
-            "uploaded_at": r.uploaded_at
+            "uploaded_at": r.uploaded_at,
+            "download_url": f"/api/doctor/reports/{r.id}/file",
+            "can_view_inline": r.file_type in ['pdf', 'jpg', 'jpeg', 'png'] if r.file_type else False
         } for r in reports
     ]
 

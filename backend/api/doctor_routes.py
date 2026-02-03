@@ -593,6 +593,14 @@ Provide your analysis focusing on issues, causes, and recommendations. Do NOT in
                 "count": count
             }
         
+        elif intent == "count_patients":
+            count = db.query(User).filter(User.role == "PATIENT").count()
+            return {
+                "response": f"We have **{count}** patient{'s' if count != 1 else ''} registered in the system.",
+                "requires_upload": False,
+                "count": count
+            }
+        
         elif intent == "list_reports":
             # Get all reports and filter out invalid ones
             all_reports = db.query(MedicalReport).order_by(MedicalReport.report_date.desc()).all()

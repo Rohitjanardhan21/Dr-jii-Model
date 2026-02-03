@@ -1,0 +1,19 @@
+name = "dr-jii-api"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "dr-jii-api"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "dr-jii-database"
+database_id = "your-database-id-here"
+
+[env.production.vars]
+ENVIRONMENT = "production"
+
+[env.production.secrets]
+# Add these via: wrangler secret put OPENAI_API_KEY
+# OPENAI_API_KEY = "your-key-here"
+# HUGGINGFACE_TOKEN = "your-token-here"

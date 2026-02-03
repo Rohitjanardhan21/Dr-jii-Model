@@ -10,7 +10,11 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     
     HOST: str = "0.0.0.0"
-    PORT: int = int(os.environ.get("PORT", 8081))  # Use Render's PORT env var
+    PORT: int = int(os.environ.get("PORT", 8000))  # Default to port 8000
+    
+    # Environment detection
+    ENVIRONMENT: str = os.environ.get("ENVIRONMENT", "development")
+    IS_PRODUCTION: bool = os.environ.get("ENVIRONMENT") == "production"
     
     # Always use root database, regardless of where the app is run from
     _project_root = Path(__file__).parent.parent
@@ -23,12 +27,12 @@ class Settings(BaseSettings):
     NEO4J_USER: str = "neo4j"
     NEO4J_PASSWORD: str = "password"
     
-    SECRET_KEY: str = "temp-secret-key-for-testing"
+    SECRET_KEY: str = os.environ.get("SECRET_KEY", "temp-secret-key-for-testing")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     
-    OPENAI_API_KEY: str = ""
+    OPENAI_API_KEY: str = os.environ.get("OPENAI_API_KEY", "")
     HUGGINGFACE_TOKEN: str = ""
     
     NER_MODEL_PATH: str = "./models/ner_model"

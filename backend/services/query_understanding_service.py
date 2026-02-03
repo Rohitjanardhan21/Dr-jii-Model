@@ -67,6 +67,7 @@ Analyze the user's query and extract the intent and relevant entities. Be smart 
 Possible intents:
 - "get_patient_report": User wants to see/get/find a medical report for a SPECIFIC patient (e.g., "rajesh medical report", "John Doe's report")
 - "count_reports": User wants to know how many reports exist (e.g., "how many medical report you hav", "how many reports", "count of reports")
+- "count_patients": User wants to know how many patients exist (e.g., "how many patients do we have", "how many patients", "patient count")
 - "list_reports": User wants to see all reports (e.g., "provide me the medical report of all people", "show all reports", "all medical reports", "reports of all patients")
 - "search_patient": User wants to find/search for a patient
 - "summarize_report": User wants to summarize a patient's report
@@ -86,7 +87,8 @@ Possible intents:
 
 IMPORTANT RULES:
 1. If query contains "how many" + ("report" OR "medical"), it's ALWAYS "count_reports" - DO NOT extract patient names from count queries
-2. If query asks for "name" or "names" of "patients" (or "patent" - common typo), it's "get_all_patient_names" - DO NOT extract individual patient names
+2. If query contains "how many" + ("patient" OR "patients"), it's ALWAYS "count_patients" - DO NOT extract patient names from count queries
+3. If query asks for "name" or "names" of "patients" (or "patent" - common typo), it's "get_all_patient_names" - DO NOT extract individual patient names
 3. If query asks for reports of "all people", "all patients", "all people", "everyone", "everybody", it's ALWAYS "list_reports" - DO NOT extract "all people" or "all patients" as a patient name
 4. Patient names are proper nouns (capitalized words). Do NOT treat common words like "you", "hav", "have", "i", "s", "me", "my", "we", "whose", "patent", "all", "people", "patients", "everyone", "everybody", "of all" as patient names
 5. Handle typos gracefully (e.g., "patent" instead of "patient", "hav" instead of "have")
@@ -241,6 +243,10 @@ CRITICAL RULES:
         # Check for count queries (before patient name extraction)
         if 'how many' in query_lower and ('report' in query_lower or 'medical' in query_lower):
             return {"intent": "count_reports", "patient_name": None, "task_name": None, "lab_test": None, "lab_condition": None, "confidence": 0.9}
+        
+        # Check for patient count queries
+        if 'how many' in query_lower and ('patient' in query_lower or 'patients' in query_lower):
+            return {"intent": "count_patients", "patient_name": None, "task_name": None, "lab_test": None, "lab_condition": None, "confidence": 0.9}
         
         # Check for list reports queries
         if ('list' in query_lower or 'show' in query_lower or 'provide me' in query_lower) and 'report' in query_lower:

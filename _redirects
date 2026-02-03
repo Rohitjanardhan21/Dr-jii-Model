@@ -1,0 +1,4 @@
+# Cloudflare Pages redirects for Dr. Jii
+/api/* https://your-backend-api.com/api/:splat 200
+/health https://your-backend-api.com/health 200
+/* /frontend/index.html 200

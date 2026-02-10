@@ -1,0 +1,28 @@
+BLOOD TEST REPORT
+                
+Patient: Patient 10
+Date: 2026-02-03
+Lab ID: LAB-1770104078792945
+
+COMPLETE BLOOD COUNT:
+- Hemoglobin: 12.5 g/dL (Normal: 12-16)
+- RBC Count: 4.2 million/μL (Normal: 4.0-5.5)
+- WBC Count: 7,500/μL (Normal: 4,000-11,000)
+- Platelet Count: 250,000/μL (Normal: 150,000-450,000)
+
+LIPID PROFILE:
+- Total Cholesterol: 180 mg/dL (Normal: <200)
+- HDL Cholesterol: 45 mg/dL (Normal: >40)
+- LDL Cholesterol: 110 mg/dL (Normal: <100)
+- Triglycerides: 125 mg/dL (Normal: <150)
+
+LIVER FUNCTION:
+- SGPT/ALT: 25 U/L (Normal: 7-56)
+- SGOT/AST: 30 U/L (Normal: 10-40)
+- Bilirubin Total: 0.8 mg/dL (Normal: 0.3-1.2)
+
+KIDNEY FUNCTION:
+- Creatinine: 0.9 mg/dL (Normal: 0.6-1.2)
+- BUN: 15 mg/dL (Normal: 7-20)
+
+REMARKS: All values within normal limits. Continue current medication.

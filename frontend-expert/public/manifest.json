@@ -1,0 +1,25 @@
+{
+  "short_name": "Delight - Dentist",
+  "name": "Delight - Dentist",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "favicon.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "favicon.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

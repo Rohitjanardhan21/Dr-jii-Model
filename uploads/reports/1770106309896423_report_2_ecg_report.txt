@@ -1,0 +1,36 @@
+🏥 MAX HEALTHCARE - ELECTROCARDIOGRAM REPORT
+
+Patient: John Doe
+Date: 2026-02-03
+Time: 13:41:49
+Cardiologist: Dr. Suryansh Singh
+
+TECHNICAL DATA:
+- Heart Rate: 78 bpm
+- PR Interval: 135 ms
+- QRS Duration: 115 ms
+- QT/QTc: 382/456 ms
+- Axis: Normal
+
+RHYTHM ANALYSIS:
+- Rhythm: Normal sinus rhythm
+- Rate: Normal rate
+
+MORPHOLOGY:
+- P waves: Normal
+- QRS complexes: Normal
+- ST segments: No significant ST changes
+- T waves: Normal T waves
+
+INTERPRETATION:
+Normal ECG
+
+CLINICAL CORRELATION:
+ECG findings correlate with clinical presentation
+
+RECOMMENDATIONS:
+Continue current management
+
+Dr. Suryansh Singh, MBBS, DM (Cardiology)
+Max Healthcare, Gurgaon
+License: MH-DOC-2024-1234

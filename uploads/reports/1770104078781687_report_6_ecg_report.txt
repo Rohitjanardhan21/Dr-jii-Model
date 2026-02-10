@@ -1,0 +1,25 @@
+ELECTROCARDIOGRAM REPORT
+
+Patient: Patient 5
+Date: 2026-02-03
+Time: 13:04:38
+
+TECHNICAL DATA:
+- Heart Rate: 72 bpm
+- PR Interval: 160 ms
+- QRS Duration: 90 ms
+- QT/QTc: 400/420 ms
+
+RHYTHM: Normal sinus rhythm
+
+AXIS: Normal axis
+
+INTERVALS: Normal
+
+ST-T CHANGES: None
+
+IMPRESSION:
+Normal ECG. No evidence of ischemia, arrhythmia, or conduction abnormalities.
+
+CLINICAL CORRELATION:
+ECG findings are within normal limits for age and gender.

@@ -1,0 +1,47 @@
+🏥 APOLLO HOSPITALS - BLOOD TEST REPORT
+
+Patient: Nikhil Shah
+Date: 2026-02-03
+Lab ID: LAB-1770107373285856
+Doctor: Dr. Suryansh Singh
+
+COMPLETE BLOOD COUNT:
+- Hemoglobin: 12.9 g/dL (Normal: 12-16)
+- RBC Count: 4.5 million/μL (Normal: 4.0-5.5)
+- WBC Count: 11187/μL (Normal: 4,000-11,000)
+- Platelet Count: 232011/μL (Normal: 150,000-450,000)
+
+DIABETES PROFILE:
+- Fasting Blood Sugar: 147 mg/dL (Normal: 70-100)
+- HbA1c: 8.1% (Normal: <5.7)
+
+LIPID PROFILE:
+- Total Cholesterol: 199 mg/dL (Normal: <200)
+- HDL Cholesterol: 48 mg/dL (Normal: >40)
+- LDL Cholesterol: 99 mg/dL (Normal: <100)
+- Triglycerides: 296 mg/dL (Normal: <150)
+
+LIVER FUNCTION:
+- SGPT/ALT: 30 U/L (Normal: 7-56)
+- SGOT/AST: 50 U/L (Normal: 10-40)
+- Bilirubin Total: 0.4 mg/dL (Normal: 0.3-1.2)
+
+KIDNEY FUNCTION:
+- Creatinine: 0.9 mg/dL (Normal: 0.6-1.2)
+- BUN: 18 mg/dL (Normal: 7-20)
+- Uric Acid: 4.1 mg/dL (Normal: 3.5-7.2)
+
+THYROID FUNCTION:
+- TSH: 6.76 mIU/L (Normal: 0.4-4.0)
+- T3: 154 ng/dL (Normal: 80-200)
+- T4: 6.6 μg/dL (Normal: 5-12)
+
+VITAMIN LEVELS:
+- Vitamin D: 14 ng/mL (Normal: 30-100)
+- Vitamin B12: 678 pg/mL (Normal: 200-900)
+
+REMARKS: Vitamin D deficiency. Supplementation recommended.
+
+Dr. Suryansh Singh, MBBS, MD
+Apollo Hospitals, Mumbai
+License: MH-DOC-2024-1234

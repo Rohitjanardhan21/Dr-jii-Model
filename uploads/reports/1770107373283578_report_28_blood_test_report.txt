@@ -1,0 +1,47 @@
+🏥 APOLLO HOSPITALS - BLOOD TEST REPORT
+
+Patient: Shreya Patel
+Date: 2026-02-03
+Lab ID: LAB-1770107373283578
+Doctor: Dr. Suryansh Singh
+
+COMPLETE BLOOD COUNT:
+- Hemoglobin: 12.9 g/dL (Normal: 12-16)
+- RBC Count: 3.9 million/μL (Normal: 4.0-5.5)
+- WBC Count: 11629/μL (Normal: 4,000-11,000)
+- Platelet Count: 304403/μL (Normal: 150,000-450,000)
+
+DIABETES PROFILE:
+- Fasting Blood Sugar: 111 mg/dL (Normal: 70-100)
+- HbA1c: 7.5% (Normal: <5.7)
+
+LIPID PROFILE:
+- Total Cholesterol: 242 mg/dL (Normal: <200)
+- HDL Cholesterol: 60 mg/dL (Normal: >40)
+- LDL Cholesterol: 92 mg/dL (Normal: <100)
+- Triglycerides: 238 mg/dL (Normal: <150)
+
+LIVER FUNCTION:
+- SGPT/ALT: 46 U/L (Normal: 7-56)
+- SGOT/AST: 57 U/L (Normal: 10-40)
+- Bilirubin Total: 0.7 mg/dL (Normal: 0.3-1.2)
+
+KIDNEY FUNCTION:
+- Creatinine: 0.8 mg/dL (Normal: 0.6-1.2)
+- BUN: 21 mg/dL (Normal: 7-20)
+- Uric Acid: 7.5 mg/dL (Normal: 3.5-7.2)
+
+THYROID FUNCTION:
+- TSH: 6.65 mIU/L (Normal: 0.4-4.0)
+- T3: 132 ng/dL (Normal: 80-200)
+- T4: 9.9 μg/dL (Normal: 5-12)
+
+VITAMIN LEVELS:
+- Vitamin D: 22 ng/mL (Normal: 30-100)
+- Vitamin B12: 574 pg/mL (Normal: 200-900)
+
+REMARKS: Thyroid dysfunction noted. Endocrinology consultation advised.
+
+Dr. Suryansh Singh, MBBS, MD
+Apollo Hospitals, Mumbai
+License: MH-DOC-2024-1234

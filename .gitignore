@@ -48,6 +48,6 @@ env/
 .DS_Store
 Thumbs.db
 
-# Uploads
-uploads/
+# Uploads - commented out to include PDF files for deployment
+# uploads/
 temp/

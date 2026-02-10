@@ -1,0 +1,30 @@
+🏥 FORTIS HEALTHCARE - CHEST X-RAY REPORT
+
+Patient: Jane Smith
+Date: 2026-02-03
+Study: Chest X-Ray PA & Lateral View
+Radiologist: Dr. Suryansh Singh
+
+CLINICAL HISTORY:
+Cough and fever for 5 days
+
+TECHNIQUE:
+Digital chest radiography in PA and lateral projections
+
+FINDINGS:
+- Heart: Normal size and shape
+- Lungs: Clear lung fields bilaterally
+- Pleura: No pleural effusion
+- Mediastinum: Normal mediastinal contours
+- Bones: No bony abnormality
+- Soft tissues: Normal
+
+IMPRESSION:
+Normal chest X-ray
+
+RECOMMENDATION:
+No further imaging required at this time
+
+Dr. Suryansh Singh, MBBS, MD (Radiology)
+Fortis Healthcare, Delhi
+License: MH-DOC-2024-1234

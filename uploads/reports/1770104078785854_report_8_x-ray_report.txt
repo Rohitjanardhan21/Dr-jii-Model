@@ -1,0 +1,21 @@
+CHEST X-RAY REPORT
+
+Patient: Patient 7
+Date: 2026-02-03
+Study: Chest X-Ray PA View
+
+CLINICAL HISTORY:
+Cough and fever for 3 days
+
+FINDINGS:
+- Heart size and shape: Normal
+- Lung fields: Clear, no consolidation
+- Costophrenic angles: Sharp
+- Mediastinum: Normal width
+- Bones: No abnormality detected
+
+IMPRESSION:
+Normal chest X-ray. No evidence of pneumonia or other pulmonary pathology.
+
+RECOMMENDATION:
+Clinical correlation advised. Follow-up if symptoms persist.

@@ -1,0 +1,48 @@
+🏥 APOLLO HOSPITALS - BLOOD TEST REPORT
+
+Patient: Priya Sharma
+Date: 2026-02-03
+Lab ID: LAB-1770106309907107
+Doctor: Dr. Suryansh Singh
+
+COMPLETE BLOOD COUNT:
+- Hemoglobin: 11.6 g/dL (Normal: 12-16)
+- RBC Count: 4.3 million/μL (Normal: 4.0-5.5)
+- WBC Count: 11854/μL (Normal: 4,000-11,000)
+- Platelet Count: 317631/μL (Normal: 150,000-450,000)
+- ESR: 20 mm/hr (Normal: 0-20)
+
+LIPID PROFILE:
+- Total Cholesterol: 256 mg/dL (Normal: <200)
+- HDL Cholesterol: 35 mg/dL (Normal: >40)
+- LDL Cholesterol: 151 mg/dL (Normal: <100)
+- Triglycerides: 238 mg/dL (Normal: <150)
+
+DIABETES SCREENING:
+- Fasting Blood Sugar: 153 mg/dL (Normal: 70-100)
+- HbA1c: 7.3% (Normal: <5.7)
+
+LIVER FUNCTION:
+- SGPT/ALT: 59 U/L (Normal: 7-56)
+- SGOT/AST: 54 U/L (Normal: 10-40)
+- Bilirubin Total: 0.8 mg/dL (Normal: 0.3-1.2)
+
+KIDNEY FUNCTION:
+- Creatinine: 1.1 mg/dL (Normal: 0.6-1.2)
+- BUN: 22 mg/dL (Normal: 7-20)
+- Uric Acid: 5.2 mg/dL (Normal: 3.5-7.2)
+
+THYROID FUNCTION:
+- TSH: 1.9 mIU/L (Normal: 0.4-4.0)
+- T3: 151 ng/dL (Normal: 80-200)
+- T4: 7.7 μg/dL (Normal: 5-12)
+
+VITAMIN LEVELS:
+- Vitamin D: 22 ng/mL (Normal: 30-100)
+- Vitamin B12: 236 pg/mL (Normal: 200-900)
+
+REMARKS: Diabetes mellitus detected. Recommend dietary modification and medication.
+
+Dr. Suryansh Singh, MBBS, MD
+Apollo Hospitals, Mumbai
+License: MH-DOC-2024-1234

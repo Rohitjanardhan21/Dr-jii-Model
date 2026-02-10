@@ -1,0 +1,30 @@
+🏥 MEDANTA HOSPITAL - ULTRASOUND REPORT
+
+Patient: Sunita Singh
+Date: 2026-02-03
+Study: Thyroid Ultrasound
+Sonologist: Dr. Suryansh Singh
+
+CLINICAL INDICATION:
+Routine screening
+
+TECHNIQUE:
+Real-time ultrasound examination using 3.5-5.0 MHz transducer
+
+FINDINGS:
+
+Abdomen:
+Normal echotexture and size of visualized organs
+
+MEASUREMENTS:
+Within normal limits
+
+IMPRESSION:
+Normal ultrasound study
+
+RECOMMENDATIONS:
+No follow-up required
+
+Dr. Suryansh Singh, MBBS, MD (Radiology)
+Medanta Hospital, Gurgaon  
+License: MH-DOC-2024-1234

@@ -1,0 +1,47 @@
+🏥 APOLLO HOSPITALS - BLOOD TEST REPORT
+
+Patient: Pooja Jain
+Date: 2026-02-03
+Lab ID: LAB-1770107373290216
+Doctor: Dr. Suryansh Singh
+
+COMPLETE BLOOD COUNT:
+- Hemoglobin: 12.9 g/dL (Normal: 12-16)
+- RBC Count: 4.7 million/μL (Normal: 4.0-5.5)
+- WBC Count: 9592/μL (Normal: 4,000-11,000)
+- Platelet Count: 300398/μL (Normal: 150,000-450,000)
+
+DIABETES PROFILE:
+- Fasting Blood Sugar: 117 mg/dL (Normal: 70-100)
+- HbA1c: 6.5% (Normal: <5.7)
+
+LIPID PROFILE:
+- Total Cholesterol: 262 mg/dL (Normal: <200)
+- HDL Cholesterol: 46 mg/dL (Normal: >40)
+- LDL Cholesterol: 148 mg/dL (Normal: <100)
+- Triglycerides: 175 mg/dL (Normal: <150)
+
+LIVER FUNCTION:
+- SGPT/ALT: 23 U/L (Normal: 7-56)
+- SGOT/AST: 30 U/L (Normal: 10-40)
+- Bilirubin Total: 0.6 mg/dL (Normal: 0.3-1.2)
+
+KIDNEY FUNCTION:
+- Creatinine: 1.6 mg/dL (Normal: 0.6-1.2)
+- BUN: 17 mg/dL (Normal: 7-20)
+- Uric Acid: 3.8 mg/dL (Normal: 3.5-7.2)
+
+THYROID FUNCTION:
+- TSH: 3.48 mIU/L (Normal: 0.4-4.0)
+- T3: 112 ng/dL (Normal: 80-200)
+- T4: 8.1 μg/dL (Normal: 5-12)
+
+VITAMIN LEVELS:
+- Vitamin D: 42 ng/mL (Normal: 30-100)
+- Vitamin B12: 729 pg/mL (Normal: 200-900)
+
+REMARKS: All parameters within normal limits. Continue healthy lifestyle.
+
+Dr. Suryansh Singh, MBBS, MD
+Apollo Hospitals, Mumbai
+License: MH-DOC-2024-1234

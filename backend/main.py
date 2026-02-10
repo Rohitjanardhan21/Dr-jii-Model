@@ -15,8 +15,17 @@ logging.basicConfig(level=logging.INFO)
 Base.metadata.create_all(bind=engine)
 
 # Get absolute path to frontend build directories
-FRONTEND_BUILD_PATH = Path(__file__).parent.parent / "frontend" / "dist"
-EXPERT_BUILD_PATH = Path(__file__).parent.parent / "frontend-expert" / "build"
+import os
+BASE_DIR = Path(__file__).resolve().parent.parent
+FRONTEND_BUILD_PATH = BASE_DIR / "frontend" / "dist"
+EXPERT_BUILD_PATH = BASE_DIR / "frontend-expert" / "build"
+
+# Log paths for debugging
+print(f"BASE_DIR: {BASE_DIR}")
+print(f"FRONTEND_BUILD_PATH: {FRONTEND_BUILD_PATH}")
+print(f"FRONTEND_BUILD_PATH exists: {FRONTEND_BUILD_PATH.exists()}")
+print(f"EXPERT_BUILD_PATH: {EXPERT_BUILD_PATH}")
+print(f"EXPERT_BUILD_PATH exists: {EXPERT_BUILD_PATH.exists()}")
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -545,10 +554,10 @@ if EXPERT_BUILD_PATH.exists():
         index_file = EXPERT_BUILD_PATH / "index.html"
         if index_file.exists():
             return FileResponse(index_file)
-        return {"error": "Expert dashboard not found"}
+        return {"error": "Expert dashboard not found", "path": str(EXPERT_BUILD_PATH)}
 else:
     # Development: serve message about building expert frontend
-    @app.get("/")
+    @app.get("/expert/")
     async def expert_build_required():
         return {
             "message": "Expert Dashboard build not found. Please run 'npm run build' in the frontend-expert directory.",

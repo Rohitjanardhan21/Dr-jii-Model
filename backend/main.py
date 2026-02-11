@@ -50,7 +50,7 @@ app.include_router(admin_routes.router)
 from fastapi import Depends, HTTPException, status, Request, Response
 from sqlalchemy.orm import Session
 from database import get_db
-from models import User
+from models import User, Patient, UserRole
 from auth import verify_password, create_access_token
 from datetime import timedelta
 
@@ -381,6 +381,132 @@ async def filter_patients(db: Session = Depends(get_db)):
             "abdmHealthId": p.abdm_health_id
         } for p in patients
     ]
+
+@app.post("/doctor/patients/create")
+async def create_patient(request: Request, db: Session = Depends(get_db)):
+    """Create a new patient"""
+    try:
+        data = await request.json()
+        
+        # Extract patient data
+        full_name = data.get("fullName")
+        email = data.get("email")
+        mobile = data.get("mobileNumner") or data.get("contactDetails", {}).get("primaryContact")
+        uhid = data.get("uhid")
+        aadhar_id = data.get("aadharId")
+        date_of_birth = data.get("dateOfBirth")
+        gender = data.get("gender")
+        blood_group = data.get("bloodGroup")
+        age = data.get("age")
+        
+        # Validate required fields
+        if not full_name:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Full name is required"
+            )
+        
+        if not mobile:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Contact number is required"
+            )
+        
+        # Check if patient already exists by email or mobile
+        existing_user = None
+        if email:
+            existing_user = db.query(User).filter(User.email == email).first()
+        if not existing_user and mobile:
+            existing_user = db.query(User).filter(User.username == mobile).first()
+        
+        if existing_user:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Patient with this email or mobile number already exists"
+            )
+        
+        # Create user account for patient
+        from auth import get_password_hash
+        import secrets
+        
+        # Generate a random password for the patient
+        temp_password = secrets.token_urlsafe(12)
+        
+        new_user = User(
+            email=email or f"{mobile}@temp.com",  # Use temp email if not provided
+            username=mobile,
+            hashed_password=get_password_hash(temp_password),
+            full_name=full_name,
+            role=UserRole.PATIENT,
+            abdm_health_id=uhid or aadhar_id,
+            is_active=True,
+            is_verified=False
+        )
+        
+        db.add(new_user)
+        db.flush()  # Get the user ID
+        
+        # Create patient profile with additional details
+        from datetime import datetime as dt
+        
+        # Parse date of birth
+        dob = None
+        if date_of_birth:
+            try:
+                if isinstance(date_of_birth, str):
+                    dob = dt.fromisoformat(date_of_birth.replace('Z', '+00:00'))
+                else:
+                    dob = date_of_birth
+            except:
+                pass
+        
+        new_patient = Patient(
+            user_id=new_user.id,
+            date_of_birth=dob,
+            gender=gender,
+            blood_group=blood_group,
+            phone=mobile,
+            emergency_contact=data.get("contactDetails", {}).get("secondaryContact"),
+            address=str(data.get("address", {})) if data.get("address") else None,
+            allergies=data.get("patientMedicalHistory", []),
+            chronic_conditions=[],
+            current_medications=[]
+        )
+        
+        db.add(new_patient)
+        db.commit()
+        db.refresh(new_user)
+        
+        return {
+            "success": True,
+            "message": "Patient created successfully!",
+            "data": {
+                "_id": str(new_user.id),
+                "title": new_user.full_name,
+                "fullName": new_user.full_name,
+                "email": new_user.email,
+                "phone": mobile,
+                "image": "/expert/images/user1.png",
+                "date": new_user.created_at.strftime("%Y-%m-%d") if new_user.created_at else dt.now().strftime("%Y-%m-%d"),
+                "gender": gender or "Male",
+                "blood": blood_group or "O+",
+                "age": age or 30,
+                "abdmHealthId": new_user.abdm_health_id,
+                "uhid": uhid
+            }
+        }
+        
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        print(f"Create patient error: {e}")
+        import traceback
+        traceback.print_exc()
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to create patient: {str(e)}"
+        )
 
 @app.get("/doctor/services")
 async def get_services():

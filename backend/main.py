@@ -463,11 +463,40 @@ async def expert_dashboard_redirect():
 @app.get("/expert/")
 async def expert_dashboard_root():
     """Serve expert dashboard root"""
+    print(f"[DEBUG] /expert/ route hit")
+    print(f"[DEBUG] EXPERT_BUILD_PATH: {EXPERT_BUILD_PATH}")
+    print(f"[DEBUG] EXPERT_BUILD_PATH.exists(): {EXPERT_BUILD_PATH.exists()}")
+    
     if EXPERT_BUILD_PATH.exists():
         index_file = EXPERT_BUILD_PATH / "index.html"
+        print(f"[DEBUG] index_file: {index_file}")
+        print(f"[DEBUG] index_file.exists(): {index_file.exists()}")
+        
         if index_file.exists():
+            print(f"[DEBUG] Serving index.html from {index_file}")
             return FileResponse(index_file)
-    return {"error": "Expert dashboard not found"}
+        else:
+            print(f"[DEBUG] index.html NOT FOUND at {index_file}")
+            # List directory contents
+            try:
+                contents = list(EXPERT_BUILD_PATH.iterdir())
+                print(f"[DEBUG] Directory contents: {[str(p.name) for p in contents]}")
+            except Exception as e:
+                print(f"[DEBUG] Error listing directory: {e}")
+    else:
+        print(f"[DEBUG] EXPERT_BUILD_PATH does NOT exist")
+        # Try to list parent directory
+        try:
+            parent = EXPERT_BUILD_PATH.parent
+            print(f"[DEBUG] Parent directory: {parent}")
+            print(f"[DEBUG] Parent exists: {parent.exists()}")
+            if parent.exists():
+                contents = list(parent.iterdir())
+                print(f"[DEBUG] Parent contents: {[str(p.name) for p in contents]}")
+        except Exception as e:
+            print(f"[DEBUG] Error checking parent: {e}")
+    
+    return {"error": "Expert dashboard not found", "path": str(EXPERT_BUILD_PATH), "exists": EXPERT_BUILD_PATH.exists()}
 
 @app.get("/api")
 async def api_root():

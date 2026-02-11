@@ -2,7 +2,7 @@ services:
   - type: web
     name: dr-jii-medical-assistant
     runtime: python3
-    buildCommand: "pip install -r requirements.txt && cd frontend && npm install && npm run build && cd ../frontend-expert && npm install && npm run build && cd .."
+    buildCommand: "pip install -r requirements.txt"
     startCommand: "python run.py"
     plan: free
     envVars:
@@ -18,5 +18,3 @@ services:
         value: production
       - key: DATABASE_URL
         value: sqlite:///./drjii.db
-      - key: NODE_VERSION
-        value: 18

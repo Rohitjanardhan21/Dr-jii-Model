@@ -512,6 +512,24 @@ async def api_root():
 async def health_check():
     return {"status": "healthy", "service": "Dr. Jii API"}
 
+@app.get("/debug/paths")
+async def debug_paths():
+    """Debug endpoint to check file paths on Render"""
+    import os
+    return {
+        "BASE_DIR": str(BASE_DIR),
+        "BASE_DIR_exists": BASE_DIR.exists(),
+        "FRONTEND_BUILD_PATH": str(FRONTEND_BUILD_PATH),
+        "FRONTEND_BUILD_PATH_exists": FRONTEND_BUILD_PATH.exists(),
+        "EXPERT_BUILD_PATH": str(EXPERT_BUILD_PATH),
+        "EXPERT_BUILD_PATH_exists": EXPERT_BUILD_PATH.exists(),
+        "expert_index_exists": (EXPERT_BUILD_PATH / "index.html").exists(),
+        "frontend_index_exists": (FRONTEND_BUILD_PATH / "index.html").exists(),
+        "cwd": os.getcwd(),
+        "BASE_DIR_contents": [str(p.name) for p in BASE_DIR.iterdir()] if BASE_DIR.exists() else [],
+        "EXPERT_BUILD_contents": [str(p.name) for p in EXPERT_BUILD_PATH.iterdir()] if EXPERT_BUILD_PATH.exists() else []
+    }
+
 # Serve React frontend
 if FRONTEND_BUILD_PATH.exists():
     # Production: serve built React app

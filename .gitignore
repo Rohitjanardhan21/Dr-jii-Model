@@ -9,9 +9,7 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -51,3 +49,5 @@ Thumbs.db
 # Uploads - commented out to include PDF files for deployment
 # uploads/
 temp/
+
+# Note: build/ and dist/ are NOT ignored - they contain frontend builds for deployment

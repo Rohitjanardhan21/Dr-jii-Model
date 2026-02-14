@@ -391,10 +391,18 @@ async def create_patient(request: Request, db: Session = Depends(get_db)):
         # Log the incoming data for debugging
         print(f"[DEBUG] Create patient request data: {data}")
         
-        # Extract patient data
+        # Extract patient data - handle both field name variations
         full_name = data.get("fullName")
         email = data.get("email")
-        mobile = data.get("mobileNumner") or data.get("contactDetails", {}).get("primaryContact")
+        
+        # Try multiple field names for mobile number
+        mobile = (
+            data.get("mobileNumner") or 
+            data.get("mobileNumber") or 
+            data.get("contactDetails", {}).get("primaryContact") or
+            data.get("phone")
+        )
+        
         uhid = data.get("uhid")
         aadhar_id = data.get("aadharId")
         date_of_birth = data.get("dateOfBirth")
@@ -407,17 +415,19 @@ async def create_patient(request: Request, db: Session = Depends(get_db)):
         # Validate required fields
         if not full_name:
             print("[DEBUG] Validation failed: Full name is required")
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Full name is required"
-            )
+            return {
+                "success": False,
+                "message": "Full name is required",
+                "debug": {"data": data}
+            }
         
         if not mobile:
             print("[DEBUG] Validation failed: Contact number is required")
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Contact number is required"
-            )
+            return {
+                "success": False,
+                "message": "Contact number is required. Please provide a valid phone number.",
+                "debug": {"data": data, "checked_fields": ["mobileNumner", "mobileNumber", "contactDetails.primaryContact", "phone"]}
+            }
         
         # Check if patient already exists by email or mobile
         existing_user = None
@@ -425,16 +435,18 @@ async def create_patient(request: Request, db: Session = Depends(get_db)):
             existing_user = db.query(User).filter(User.email == email).first()
             if existing_user:
                 print(f"[DEBUG] Patient exists with email: {email}")
+                return {
+                    "success": False,
+                    "message": f"Patient with email {email} already exists"
+                }
         if not existing_user and mobile:
             existing_user = db.query(User).filter(User.username == mobile).first()
             if existing_user:
                 print(f"[DEBUG] Patient exists with mobile: {mobile}")
-        
-        if existing_user:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Patient with this email or mobile number already exists"
-            )
+                return {
+                    "success": False,
+                    "message": f"Patient with mobile number {mobile} already exists"
+                }
         
         # Create user account for patient
         from auth import get_password_hash
@@ -516,16 +528,20 @@ async def create_patient(request: Request, db: Session = Depends(get_db)):
         
     except HTTPException as he:
         print(f"[DEBUG] HTTPException: {he.detail}")
-        raise he
+        return {
+            "success": False,
+            "message": he.detail
+        }
     except Exception as e:
         print(f"[DEBUG] Create patient error: {e}")
         import traceback
         traceback.print_exc()
         db.rollback()
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to create patient: {str(e)}"
-        )
+        return {
+            "success": False,
+            "message": f"Failed to create patient: {str(e)}",
+            "error": str(e)
+        }
 
 @app.get("/doctor/patient/{patient_id}")
 async def get_patient_details(patient_id: int, db: Session = Depends(get_db)):

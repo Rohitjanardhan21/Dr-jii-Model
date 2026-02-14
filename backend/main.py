@@ -527,6 +527,158 @@ async def create_patient(request: Request, db: Session = Depends(get_db)):
             detail=f"Failed to create patient: {str(e)}"
         )
 
+@app.get("/doctor/patient/{patient_id}")
+async def get_patient_details(patient_id: int, db: Session = Depends(get_db)):
+    """Get detailed patient information"""
+    try:
+        from datetime import datetime
+        
+        # Get user
+        user = db.query(User).filter(User.id == patient_id).first()
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Patient not found"
+            )
+        
+        # Get patient profile
+        patient = db.query(Patient).filter(Patient.user_id == patient_id).first()
+        
+        # Calculate age from date of birth
+        age = 30  # Default
+        if patient and patient.date_of_birth:
+            today = datetime.now()
+            age = today.year - patient.date_of_birth.year
+            if today.month < patient.date_of_birth.month or (today.month == patient.date_of_birth.month and today.day < patient.date_of_birth.day):
+                age -= 1
+        
+        return {
+            "_id": str(user.id),
+            "fullName": user.full_name or user.username,
+            "email": user.email,
+            "phone": patient.phone if patient else user.username,
+            "image": "/expert/images/user1.png",
+            "dateOfBirth": patient.date_of_birth.isoformat() if patient and patient.date_of_birth else None,
+            "gender": patient.gender if patient else "Male",
+            "bloodGroup": patient.blood_group if patient else "O+",
+            "age": age,
+            "abdmHealthId": user.abdm_health_id,
+            "uhid": user.abdm_health_id,
+            "aadharId": user.abdm_health_id,
+            "address": patient.address if patient else "",
+            "emergencyContact": patient.emergency_contact if patient else "",
+            "allergies": patient.allergies if patient else [],
+            "chronicConditions": patient.chronic_conditions if patient else [],
+            "currentMedications": patient.current_medications if patient else [],
+            "createdAt": user.created_at.isoformat() if user.created_at else None
+        }
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        print(f"Get patient error: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+@app.delete("/doctor/patient/{patient_id}")
+async def delete_patient(patient_id: int, db: Session = Depends(get_db)):
+    """Delete a patient"""
+    try:
+        # Get user
+        user = db.query(User).filter(User.id == patient_id).first()
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Patient not found"
+            )
+        
+        # Delete patient profile first (foreign key constraint)
+        patient = db.query(Patient).filter(Patient.user_id == patient_id).first()
+        if patient:
+            db.delete(patient)
+        
+        # Delete user
+        db.delete(user)
+        db.commit()
+        
+        return {
+            "success": True,
+            "message": "Patient deleted successfully"
+        }
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        print(f"Delete patient error: {e}")
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+@app.get("/doctor/medical-records/{patient_id}")
+async def get_patient_medical_records(patient_id: int, db: Session = Depends(get_db)):
+    """Get medical records for a patient"""
+    try:
+        from models import MedicalReport
+        
+        records = db.query(MedicalReport).filter(MedicalReport.patient_id == patient_id).order_by(MedicalReport.report_date.desc()).all()
+        
+        return {
+            "success": True,
+            "data": [
+                {
+                    "_id": str(r.id),
+                    "reportType": r.report_type,
+                    "reportName": r.report_name,
+                    "reportDate": r.report_date.isoformat() if r.report_date else None,
+                    "filePath": r.file_path,
+                    "fileType": r.file_type,
+                    "summary": r.ai_summary,
+                    "keyFindings": r.ai_key_findings,
+                    "uploadedAt": r.uploaded_at.isoformat() if r.uploaded_at else None
+                } for r in records
+            ]
+        }
+    except Exception as e:
+        print(f"Get medical records error: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+@app.get("/doctor/getDoctorProfile/{doctor_id}")
+async def get_doctor_profile(doctor_id: int, db: Session = Depends(get_db)):
+    """Get doctor profile"""
+    try:
+        user = db.query(User).filter(User.id == doctor_id, User.role == UserRole.DOCTOR).first()
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Doctor not found"
+            )
+        
+        return {
+            "success": True,
+            "data": {
+                "_id": str(user.id),
+                "fullName": user.full_name or user.username,
+                "email": user.email,
+                "specialization": user.specialization,
+                "hospital": user.hospital_affiliation,
+                "licenseNumber": user.medical_license_number,
+                "role": user.role
+            }
+        }
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        print(f"Get doctor profile error: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
 @app.get("/doctor/services")
 async def get_services():
     """Get medical services"""

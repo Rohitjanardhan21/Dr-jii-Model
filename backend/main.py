@@ -388,6 +388,9 @@ async def create_patient(request: Request, db: Session = Depends(get_db)):
     try:
         data = await request.json()
         
+        # Log the incoming data for debugging
+        print(f"[DEBUG] Create patient request data: {data}")
+        
         # Extract patient data
         full_name = data.get("fullName")
         email = data.get("email")
@@ -399,14 +402,18 @@ async def create_patient(request: Request, db: Session = Depends(get_db)):
         blood_group = data.get("bloodGroup")
         age = data.get("age")
         
+        print(f"[DEBUG] Extracted - fullName: {full_name}, mobile: {mobile}, email: {email}")
+        
         # Validate required fields
         if not full_name:
+            print("[DEBUG] Validation failed: Full name is required")
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Full name is required"
             )
         
         if not mobile:
+            print("[DEBUG] Validation failed: Contact number is required")
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Contact number is required"
@@ -416,8 +423,12 @@ async def create_patient(request: Request, db: Session = Depends(get_db)):
         existing_user = None
         if email:
             existing_user = db.query(User).filter(User.email == email).first()
+            if existing_user:
+                print(f"[DEBUG] Patient exists with email: {email}")
         if not existing_user and mobile:
             existing_user = db.query(User).filter(User.username == mobile).first()
+            if existing_user:
+                print(f"[DEBUG] Patient exists with mobile: {mobile}")
         
         if existing_user:
             raise HTTPException(
@@ -431,6 +442,8 @@ async def create_patient(request: Request, db: Session = Depends(get_db)):
         
         # Generate a random password for the patient
         temp_password = secrets.token_urlsafe(12)
+        
+        print(f"[DEBUG] Creating user with email: {email or f'{mobile}@temp.com'}, username: {mobile}")
         
         new_user = User(
             email=email or f"{mobile}@temp.com",  # Use temp email if not provided
@@ -446,6 +459,8 @@ async def create_patient(request: Request, db: Session = Depends(get_db)):
         db.add(new_user)
         db.flush()  # Get the user ID
         
+        print(f"[DEBUG] User created with ID: {new_user.id}")
+        
         # Create patient profile with additional details
         from datetime import datetime as dt
         
@@ -457,8 +472,9 @@ async def create_patient(request: Request, db: Session = Depends(get_db)):
                     dob = dt.fromisoformat(date_of_birth.replace('Z', '+00:00'))
                 else:
                     dob = date_of_birth
-            except:
-                pass
+                print(f"[DEBUG] Parsed DOB: {dob}")
+            except Exception as e:
+                print(f"[DEBUG] Failed to parse DOB: {e}")
         
         new_patient = Patient(
             user_id=new_user.id,
@@ -476,6 +492,8 @@ async def create_patient(request: Request, db: Session = Depends(get_db)):
         db.add(new_patient)
         db.commit()
         db.refresh(new_user)
+        
+        print(f"[DEBUG] Patient profile created successfully")
         
         return {
             "success": True,
@@ -497,9 +515,10 @@ async def create_patient(request: Request, db: Session = Depends(get_db)):
         }
         
     except HTTPException as he:
+        print(f"[DEBUG] HTTPException: {he.detail}")
         raise he
     except Exception as e:
-        print(f"Create patient error: {e}")
+        print(f"[DEBUG] Create patient error: {e}")
         import traceback
         traceback.print_exc()
         db.rollback()
